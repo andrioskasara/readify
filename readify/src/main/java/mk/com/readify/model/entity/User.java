@@ -38,6 +38,10 @@ public class User implements UserDetails, Principal {
     private boolean isEnabled;
     @ManyToMany(fetch = FetchType.EAGER)
     private List<Role> roles;
+    @OneToMany(mappedBy = "bookOwner")
+    private List<Book> books;
+    @OneToMany(mappedBy = "borrower")
+    private List<BookBorrowing> bookBorrowings;
     @CreatedDate
     @Column(nullable = false, updatable = false)
     private LocalDateTime createdDate;

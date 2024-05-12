@@ -4,6 +4,7 @@
     <option name="originalFiles">
       <list>
         <option value="$PROJECT_DIR$/readify/readify/pom.xml" />
+        <option value="$PROJECT_DIR$/readify/pom.xml" />
       </list>
     </option>
   </component>
