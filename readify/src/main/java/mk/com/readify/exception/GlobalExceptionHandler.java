@@ -18,6 +18,16 @@ import static org.springframework.http.HttpStatus.*;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
+
+    @ExceptionHandler(BookOperationDeniedException.class)
+    public ResponseEntity<ExceptionResponse> handleException(BookOperationDeniedException exception) {
+        return ResponseEntity
+                .status(BAD_REQUEST)
+                .body(ExceptionResponse.builder()
+                        .error(exception.getMessage())
+                        .build());
+    }
+
     @ExceptionHandler(LockedException.class)
     public ResponseEntity<ExceptionResponse> handleException(LockedException exception) {
         return ResponseEntity

@@ -14,6 +14,6 @@ import mk.com.readify.model.common.BaseEntity;
 public class BookReview extends BaseEntity {
     @ManyToOne
     private Book reviewedBook;
-    private double rating;
+    private Double rating;
     private String comment;
 }

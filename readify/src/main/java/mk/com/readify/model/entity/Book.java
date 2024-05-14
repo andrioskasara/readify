@@ -27,4 +27,17 @@ public class Book extends BaseEntity {
     private List<BookBorrowing> bookBorrowings;
     private boolean isShareable;
     private boolean isArchived;
+
+    @Transient
+    public double getRating() {
+        if (bookReviews == null || bookReviews.isEmpty()) {
+            return 0.0;
+        }
+        var rating = this.bookReviews
+                .stream()
+                .mapToDouble(BookReview::getRating)
+                .average()
+                .orElse(0.0);
+        return Math.round(rating * 10.0) / 10.0;
+    }
 }
