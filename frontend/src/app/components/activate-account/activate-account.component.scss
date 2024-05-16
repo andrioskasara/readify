@@ -1,0 +1,15 @@
+.container {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.activation-message, .activation-error {
+  text-align: center;
+}
+
+.activation-error {
+  color: #f00;
+}
+
