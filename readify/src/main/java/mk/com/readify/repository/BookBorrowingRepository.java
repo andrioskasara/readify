@@ -34,6 +34,15 @@ public interface BookBorrowingRepository extends JpaRepository<BookBorrowing, Lo
     boolean isCurrentlyBorrowedByUser(Long bookId, Long userId);
 
     @Query("""
+            select
+            (count(bookBorrowing) > 0) as isBorrowed
+            from BookBorrowing bookBorrowing
+            where bookBorrowing.borrowedBook.id = :bookId 
+            and bookBorrowing.isReturnApproved = false                
+            """)
+    boolean isCurrentlyBorrowed(Long bookId);
+
+    @Query("""
             select bookBorrowing
             from BookBorrowing bookBorrowing
             where bookBorrowing.borrowedBook.id = :bookId 

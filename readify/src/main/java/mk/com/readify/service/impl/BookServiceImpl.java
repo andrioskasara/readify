@@ -2,6 +2,7 @@ package mk.com.readify.service.impl;
 
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import mk.com.readify.exception.BookOperationDeniedException;
 import mk.com.readify.model.common.PageResponse;
 import mk.com.readify.model.entity.Book;
@@ -22,6 +23,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
@@ -29,6 +31,8 @@ import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
+@Transactional
 public class BookServiceImpl implements BookService {
     private final BookConverter bookConverter;
     private final BookRepository bookRepository;
@@ -83,8 +87,6 @@ public class BookServiceImpl implements BookService {
         User user = ((User) connectedUser.getPrincipal());
         Pageable pageable = PageRequest.of(page, size, Sort.by("createdDate").descending());
         Page<BookBorrowing> allBorrowedBooks = bookBorrowingRepository.findAllBorrowedBooks(pageable, user.getId());
-
-
         List<BorrowedBookResponse> bookResponses = allBorrowedBooks.stream()
                 .map(bookConverter::convertToBorrowedBookResponse)
                 .toList();
@@ -103,8 +105,6 @@ public class BookServiceImpl implements BookService {
         User user = ((User) connectedUser.getPrincipal());
         Pageable pageable = PageRequest.of(page, size, Sort.by("createdDate").descending());
         Page<BookBorrowing> allBorrowedBooks = bookBorrowingRepository.findAllReturnedBooks(pageable, user.getId());
-
-
         List<BorrowedBookResponse> bookResponses = allBorrowedBooks.stream()
                 .map(bookConverter::convertToBorrowedBookResponse)
                 .toList();
@@ -137,8 +137,12 @@ public class BookServiceImpl implements BookService {
         if (!book.isShareable() || book.isArchived()) {
             throw new BookOperationDeniedException("The requested book cannot be borrowed");
         }
-        final boolean isCurrentlyBorrowed = bookBorrowingRepository.isCurrentlyBorrowedByUser(bookId, user.getId());
-        if (isCurrentlyBorrowed) {
+        final boolean isCurrentlyBorrowedByUser = bookBorrowingRepository.isCurrentlyBorrowedByUser(bookId, user.getId());
+        if (isCurrentlyBorrowedByUser) {
+            throw new BookOperationDeniedException("You already borrowed the requested book and it is still not returned or the return is not approved by the book owner");
+        }
+        final boolean isCurrentlyBorrowedByAnotherUser = bookBorrowingRepository.isCurrentlyBorrowed(bookId);
+        if (isCurrentlyBorrowedByAnotherUser) {
             throw new BookOperationDeniedException("The requested book is currently borrowed");
         }
         BookBorrowing bookBorrowing = BookBorrowing.builder()
@@ -173,7 +177,7 @@ public class BookServiceImpl implements BookService {
         Book book = bookRepository.findById(bookId)
                 .orElseThrow(() -> new EntityNotFoundException("No book found with ID " + bookId));
         if (Objects.equals(user.getId(), book.getBookOwner().getId())) {
-            throw new BookOperationDeniedException("You cannot borrow or return your own book");
+            throw new BookOperationDeniedException("You cannot approve the return of a book you do not own");
         }
         if (!book.isShareable() || book.isArchived()) {
             throw new BookOperationDeniedException("The requested book cannot be borrowed");
