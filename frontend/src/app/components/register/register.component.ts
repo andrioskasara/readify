@@ -11,6 +11,7 @@ import {AuthenticationService} from "../../services/services/authentication.serv
 export class RegisterComponent {
   registrationRequest: RegistrationRequest = {email: '', firstName: '', lastName: '', password: ''};
   errorMessage: Array<string> = [];
+  isWaiting: boolean = false;
 
   constructor(
     private router: Router,
@@ -19,6 +20,7 @@ export class RegisterComponent {
 
   register(): void {
     this.errorMessage = [];
+    this.isWaiting = true;
     this.authService.register({
       body: this.registrationRequest
     }).subscribe({
@@ -26,9 +28,18 @@ export class RegisterComponent {
         this.router.navigate(['activate-account']);
       },
       error: (err) => {
-        this.errorMessage = err.error.validationErrors;
+        if (err.error && err.error.error === "User with that email is already registered") {
+          this.errorMessage.push(err.error.error);
+          this.isWaiting = false;
+        } else {
+          this.errorMessage = err.error.validationErrors;
+        }
+        this.isWaiting = false;
+      },
+      complete: () => {
+        this.isWaiting = false;
       }
-    })
+    });
   }
 
   login(): void {

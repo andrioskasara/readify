@@ -1,6 +1,10 @@
 <div class="container-fluid register-container card">
   <h3 class="text-center mt-3">Create a new account</h3>
   <hr/>
+  <div *ngIf="isWaiting && !errorMessage.length" class="alert alert-info" role="alert">
+    A verification email will be sent to your provided email address upon registration. Please follow the instructions
+    in the email to activate your account.
+  </div>
   <div class="alert alert-danger" role="alert" *ngIf="errorMessage.length">
     <p *ngFor="let message of errorMessage">{{ message }}</p>
   </div>
@@ -24,8 +28,9 @@
     <input [(ngModel)]="registrationRequest.password" type="password" class="form-control" id="password">
   </div>
   <div class="d-flex justify-content-between mb-3">
-    <button type="button" class="btn btn-info" (click)="register()">
-      Create an account
+    <button type="button" class="btn btn-info" (click)="register()" [disabled]="isWaiting">
+      <span *ngIf="isWaiting" class="fas fa-spinner fa-spin mr-2"></span>
+      {{ isWaiting ? 'Creating an account...' : 'Create an account'}}
     </button>
     <div>
       Already have an account?&nbsp;

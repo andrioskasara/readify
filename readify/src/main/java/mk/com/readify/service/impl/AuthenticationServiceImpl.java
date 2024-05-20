@@ -2,6 +2,7 @@ package mk.com.readify.service.impl;
 
 import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
+import mk.com.readify.exception.EmailAlreadyRegisteredException;
 import mk.com.readify.model.request.AuthenticationRequest;
 import mk.com.readify.model.response.AuthenticationResponse;
 import mk.com.readify.model.request.RegistrationRequest;
@@ -44,6 +45,9 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     public void register(RegistrationRequest request) throws MessagingException {
         var userRole = roleRepository.findByName("USER")
                 .orElseThrow(() -> new IllegalStateException("Role USER was not initialized"));
+        if (userRepository.existsByEmail(request.getEmail())) {
+            throw new EmailAlreadyRegisteredException("User with that email is already registered");
+        }
         var user = User.builder()
                 .firstName(request.getFirstName())
                 .lastName(request.getLastName())
@@ -102,7 +106,10 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         var user = ((User) auth.getPrincipal());
         claims.put("fullName", user.getFullName());
         var jwtToken = jwtService.generateToken(claims, user);
-        return AuthenticationResponse.builder().token(jwtToken).build();
+        return AuthenticationResponse.builder()
+                .token(jwtToken)
+                .fullName(user.getFullName())
+                .build();
     }
 
     @Transactional

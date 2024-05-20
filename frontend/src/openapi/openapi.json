@@ -720,6 +720,9 @@
         "properties": {
           "token": {
             "type": "string"
+          },
+          "fullName": {
+            "type": "string"
           }
         }
       },
@@ -804,10 +807,10 @@
             "type": "number",
             "format": "double"
           },
-          "shareable": {
+          "archived": {
             "type": "boolean"
           },
-          "archived": {
+          "shareable": {
             "type": "boolean"
           }
         }

@@ -28,6 +28,15 @@ public class GlobalExceptionHandler {
                         .build());
     }
 
+    @ExceptionHandler(EmailAlreadyRegisteredException.class)
+    public ResponseEntity<ExceptionResponse> handleException(EmailAlreadyRegisteredException exception) {
+        return ResponseEntity
+                .status(BAD_REQUEST)
+                .body(ExceptionResponse.builder()
+                        .error(exception.getMessage())
+                        .build());
+    }
+
     @ExceptionHandler(ActivationTokenException.class)
     public ResponseEntity<ExceptionResponse> handleException(ActivationTokenException exp) {
         return ResponseEntity

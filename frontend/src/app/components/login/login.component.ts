@@ -3,6 +3,7 @@ import {AuthenticationRequest} from "../../services/models/authentication-reques
 import {Router} from '@angular/router';
 import {AuthenticationService} from "../../services/services/authentication.service";
 import {TokenService} from "../../services/token/token.service";
+import {UserService} from "../../services/services/user.service";
 
 @Component({
   selector: 'app-login',
@@ -16,7 +17,8 @@ export class LoginComponent {
   constructor(
     private router: Router,
     private authService: AuthenticationService,
-    private tokenService: TokenService
+    private tokenService: TokenService,
+    private userService: UserService
   ) {
   }
 
@@ -27,6 +29,7 @@ export class LoginComponent {
     }).subscribe({
       next: (res) => {
         this.tokenService.token = res.token as string;
+        this.userService.setFullName(res.fullName as string);
         this.router.navigate(['books']);
       },
       error: (err) => {

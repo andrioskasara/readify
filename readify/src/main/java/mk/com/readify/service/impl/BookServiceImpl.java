@@ -162,8 +162,11 @@ public class BookServiceImpl implements BookService {
         if (Objects.equals(user.getId(), book.getBookOwner().getId())) {
             throw new BookOperationDeniedException("You cannot borrow or return your own book");
         }
-        if (!book.isShareable() || book.isArchived()) {
-            throw new BookOperationDeniedException("The requested book cannot be borrowed");
+        if (!book.isShareable()) {
+            throw new BookOperationDeniedException("The requested book is not shareable");
+        }
+        if (book.isArchived()) {
+            throw new BookOperationDeniedException("The requested book is archived");
         }
         BookBorrowing bookBorrowing = bookBorrowingRepository.findByBookIdAndUserId(bookId, user.getId())
                 .orElseThrow(() -> new BookOperationDeniedException("You did not borrow this book"));
@@ -176,16 +179,22 @@ public class BookServiceImpl implements BookService {
         User user = ((User) connectedUser.getPrincipal());
         Book book = bookRepository.findById(bookId)
                 .orElseThrow(() -> new EntityNotFoundException("No book found with ID " + bookId));
-        if (Objects.equals(user.getId(), book.getBookOwner().getId())) {
+        if (!Objects.equals(user.getId(), book.getBookOwner().getId())) {
             throw new BookOperationDeniedException("You cannot approve the return of a book you do not own");
         }
-        if (!book.isShareable() || book.isArchived()) {
-            throw new BookOperationDeniedException("The requested book cannot be borrowed");
+        if (!book.isShareable()) {
+            throw new BookOperationDeniedException("The requested book is not shareable");
+        }
+        if (book.isArchived()) {
+            throw new BookOperationDeniedException("The requested book is archived");
         }
         BookBorrowing bookBorrowing = bookBorrowingRepository.findByBookIdAndBookOwnerId(bookId, user.getId())
                 .orElseThrow(() -> new BookOperationDeniedException("The book is not returned yet"));
         bookBorrowing.setReturnApproved(true);
-        return bookBorrowingRepository.save(bookBorrowing).getId();
+        bookBorrowingRepository.save(bookBorrowing);
+        book.setShareable(true);
+        book.setArchived(false);
+        return bookRepository.save(book).getId();
     }
 
     @Override
@@ -195,6 +204,13 @@ public class BookServiceImpl implements BookService {
                 .orElseThrow(() -> new EntityNotFoundException("No book found with ID " + bookId));
         if (!Objects.equals(user.getId(), book.getBookOwner().getId())) {
             throw new BookOperationDeniedException("You cannot update the book's shareable status");
+        }
+        if (!bookBorrowingRepository.isReturnApproved(bookId, user.getId())) {
+            throw new BookOperationDeniedException("The return is not approved yet");
+        }
+        final boolean isCurrentlyBorrowed = bookBorrowingRepository.isCurrentlyBorrowed(bookId);
+        if (isCurrentlyBorrowed) {
+            throw new BookOperationDeniedException("The requested book is currently borrowed, you cannot update the status");
         }
         book.setShareable(!book.isShareable());
         return bookRepository.save(book).getId();
@@ -207,6 +223,13 @@ public class BookServiceImpl implements BookService {
                 .orElseThrow(() -> new EntityNotFoundException("No book found with ID " + bookId));
         if (!Objects.equals(user.getId(), book.getBookOwner().getId())) {
             throw new BookOperationDeniedException("You cannot update the book's archived status");
+        }
+        if (!bookBorrowingRepository.isReturnApproved(bookId, user.getId())) {
+            throw new BookOperationDeniedException("The return is not approved yet");
+        }
+        final boolean isCurrentlyBorrowed = bookBorrowingRepository.isCurrentlyBorrowed(bookId);
+        if (isCurrentlyBorrowed) {
+            throw new BookOperationDeniedException("The requested book is currently borrowed, you cannot update the status");
         }
         book.setArchived(!book.isArchived());
         return bookRepository.save(book).getId();
