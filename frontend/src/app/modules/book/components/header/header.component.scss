@@ -1,0 +1,33 @@
+form.d-flex.align-items-center.gap-2 {
+  margin-left: auto;
+  max-width: 100%;
+}
+
+.form-control {
+  max-width: 200px;
+}
+
+li > a {
+  &.active {
+    color: #24a7e9;
+    border-radius: 5px;
+  }
+
+  &:hover {
+    background-color: #e0ecf5;
+    border-radius: 5px;
+    font-weight: 500;
+  }
+}
+
+.fullName {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 15vw;
+  display: inline-block;
+}
+
+.text, .fullName {
+  font-size: 0.875rem;
+}

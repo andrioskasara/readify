@@ -30,6 +30,8 @@ import { PageResponseBookResponse } from '../models/page-response-book-response'
 import { PageResponseBorrowedBookResponse } from '../models/page-response-borrowed-book-response';
 import { returnBorrowedBook } from '../fn/book/return-borrowed-book';
 import { ReturnBorrowedBook$Params } from '../fn/book/return-borrowed-book';
+import { searchBooks } from '../fn/book/search-books';
+import { SearchBooks$Params } from '../fn/book/search-books';
 import { updateArchivedBookStatus } from '../fn/book/update-archived-book-status';
 import { UpdateArchivedBookStatus$Params } from '../fn/book/update-archived-book-status';
 import { updateShareableBookStatus } from '../fn/book/update-shareable-book-status';
@@ -269,6 +271,31 @@ export class BookService extends BaseService {
   findBookById(params: FindBookById$Params, context?: HttpContext): Observable<BookResponse> {
     return this.findBookById$Response(params, context).pipe(
       map((r: StrictHttpResponse<BookResponse>): BookResponse => r.body)
+    );
+  }
+
+  /** Path part for operation `searchBooks()` */
+  static readonly SearchBooksPath = '/books/search';
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `searchBooks()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  searchBooks$Response(params: SearchBooks$Params, context?: HttpContext): Observable<StrictHttpResponse<PageResponseBookResponse>> {
+    return searchBooks(this.http, this.rootUrl, params, context);
+  }
+
+  /**
+   * This method provides access only to the response body.
+   * To access the full response (for headers, for example), `searchBooks$Response()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  searchBooks(params: SearchBooks$Params, context?: HttpContext): Observable<PageResponseBookResponse> {
+    return this.searchBooks$Response(params, context).pipe(
+      map((r: StrictHttpResponse<PageResponseBookResponse>): PageResponseBookResponse => r.body)
     );
   }
 
