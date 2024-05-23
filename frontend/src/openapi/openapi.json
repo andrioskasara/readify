@@ -469,6 +469,56 @@
         }
       }
     },
+    "/books/search": {
+      "get": {
+        "tags": [
+          "Book"
+        ],
+        "operationId": "searchBooks",
+        "parameters": [
+          {
+            "name": "q",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 0
+            }
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 12
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PageResponseBookResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/books/returned": {
       "get": {
         "tags": [
@@ -807,10 +857,10 @@
             "type": "number",
             "format": "double"
           },
-          "archived": {
+          "shareable": {
             "type": "boolean"
           },
-          "shareable": {
+          "archived": {
             "type": "boolean"
           }
         }

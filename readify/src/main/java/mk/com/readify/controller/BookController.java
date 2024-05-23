@@ -97,4 +97,12 @@ public class BookController {
         return ResponseEntity.accepted().build();
     }
 
+    @GetMapping("/search")
+    public ResponseEntity<PageResponse<BookResponse>> searchBooks(
+            @RequestParam(name = "q") String searchTerm,
+            @RequestParam(name = "page", defaultValue = "0", required = false) int page,
+            @RequestParam(name = "size", defaultValue = "12", required = false) int size) {
+        return ResponseEntity.ok(bookService.searchBooks(searchTerm, page, size));
+    }
+
 }

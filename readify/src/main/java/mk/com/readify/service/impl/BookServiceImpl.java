@@ -244,4 +244,21 @@ public class BookServiceImpl implements BookService {
         book.setBookCoverImage(bookCoverImage);
         bookRepository.save(book);
     }
+
+    @Override
+    public PageResponse<BookResponse> searchBooks(String searchTerm, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by("createdDate").descending());
+        Page<Book> books = bookRepository.searchBooks(pageable, searchTerm.trim());
+        List<BookResponse> bookResponses = books.stream()
+                .map(bookConverter::convertToBookResponse)
+                .toList();
+        return new PageResponse<>(
+                bookResponses,
+                books.getNumber(),
+                books.getSize(),
+                books.getTotalElements(),
+                books.getTotalPages(),
+                books.isFirst(),
+                books.isLast());
+    }
 }

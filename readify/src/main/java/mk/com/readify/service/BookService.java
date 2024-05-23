@@ -31,4 +31,6 @@ public interface BookService {
     Long updateArchivedStatus(Long bookId, Authentication user);
 
     void uploadBookCoverImage(Long bookId, MultipartFile file, Authentication user);
+
+    PageResponse<BookResponse> searchBooks(String searchTerm, int page, int size);
 }
