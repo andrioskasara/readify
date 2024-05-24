@@ -3,18 +3,16 @@
      [class.border-danger-subtle]="book.archived && manage">
   <img [src]="bookCover" class="card-img-top" alt="Cover Image" height="200"/>
   <div class="card-body overflow-y-scroll">
-    <h4 class="card-title mb-3 text-nowrap fw-bold fs-5">
+    <h4 class="card-title mb-3 fw-bold fs-5">
       <i class="fa-solid fa-book"></i> {{book.title}}
     </h4>
-    <h5 class="card-subtitle mb-1 text-secondary fs-6">
+    <h5 class="card-subtitle mb-1 text-secondary fs-6 mb-2">
+      <i class="fas fa-pencil" title="Book Author"></i>
+
       {{book.authorName}}
     </h5>
-    <h6 class="card-subtitle mb-1 text-secondary fs-6">
-      <i class="fas fa-code"></i>
-      isbn: {{book.isbn}}
-    </h6>
     <h6 class="card-subtitle text-secondary fs-6">
-      <i class="fas fa-user"></i>
+      <i class="fas fa-user" title="Book Owner"></i>
       {{book.ownerName}}
     </h6>
     <hr/>
@@ -26,6 +24,7 @@
       <span class="fw-bold" *ngIf="book.bookRating || 0 > 0">{{book.bookRating}}</span>
     </div>
     <div class="d-flex gap-2" *ngIf="!manage">
+      <i (click)="onShowDetails()" class="fas fa-circle-info text-info" title="View Details"></i>
       <i (click)="onBorrow()" class="fas fa-list-check text-primary" title="Borrow book"></i>
     </div>
     <div class="d-flex gap-2" *ngIf="manage">

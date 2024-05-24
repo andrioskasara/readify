@@ -205,7 +205,7 @@ public class BookServiceImpl implements BookService {
         if (!Objects.equals(user.getId(), book.getBookOwner().getId())) {
             throw new BookOperationDeniedException("You cannot update the book's shareable status");
         }
-        if (!bookBorrowingRepository.isReturnApproved(bookId, user.getId())) {
+        if (bookBorrowingRepository.isCurrentlyBorrowed(bookId) && !bookBorrowingRepository.isReturnApproved(bookId, user.getId())) {
             throw new BookOperationDeniedException("The return is not approved yet");
         }
         final boolean isCurrentlyBorrowed = bookBorrowingRepository.isCurrentlyBorrowed(bookId);
@@ -224,7 +224,7 @@ public class BookServiceImpl implements BookService {
         if (!Objects.equals(user.getId(), book.getBookOwner().getId())) {
             throw new BookOperationDeniedException("You cannot update the book's archived status");
         }
-        if (!bookBorrowingRepository.isReturnApproved(bookId, user.getId())) {
+        if (bookBorrowingRepository.isCurrentlyBorrowed(bookId) && !bookBorrowingRepository.isReturnApproved(bookId, user.getId())) {
             throw new BookOperationDeniedException("The return is not approved yet");
         }
         final boolean isCurrentlyBorrowed = bookBorrowingRepository.isCurrentlyBorrowed(bookId);

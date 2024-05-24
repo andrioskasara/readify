@@ -11,7 +11,7 @@ import {BookResponse} from "../../../../services/models/book-response";
 })
 export class MyBooksComponent implements OnInit {
   page: number = 0;
-  size: number = 1;
+  size: number = 4;
   bookResponse: PageResponseBookResponse = {};
   message: string = '';
 

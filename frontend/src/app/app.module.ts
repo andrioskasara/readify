@@ -4,7 +4,7 @@ import {CommonModule} from '@angular/common';
 import {FormsModule} from '@angular/forms';
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
-import {HTTP_INTERCEPTORS, HttpClient, HttpClientModule} from "@angular/common/http";
+import {HTTP_INTERCEPTORS, HttpClientModule, provideHttpClient, withFetch} from "@angular/common/http";
 import {LoginComponent} from './components/login/login.component';
 import {RegisterComponent} from './components/register/register.component';
 import {ActivateAccountComponent} from './components/activate-account/activate-account.component';
@@ -28,7 +28,7 @@ import {AuthenticationService} from "./services/services";
     CodeInputModule
   ],
   providers: [
-    HttpClient,
+    provideHttpClient(withFetch()),
     AuthenticationService,
     {
       provide: HTTP_INTERCEPTORS,

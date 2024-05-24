@@ -35,8 +35,8 @@ export class ActivateAccountComponent {
         this.isSubmitted = true;
         this.isOk = true;
       },
-      error: () => {
-        this.message = 'Activation token has expired. A new token has been sent to your email address.';
+      error: (err) => {
+        this.message = err.error.error;
         this.isSubmitted = true;
         this.isOk = false;
       }

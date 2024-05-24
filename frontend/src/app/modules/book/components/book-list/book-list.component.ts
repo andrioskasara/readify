@@ -11,7 +11,7 @@ import {BookResponse} from "../../../../services/models/book-response";
 })
 export class BookListComponent implements OnInit {
   page: number = 0;
-  size: number = 12;
+  size: number = 4;
   bookResponse: PageResponseBookResponse = {};
   message: string = '';
   messageType: string = 'success';
@@ -76,5 +76,10 @@ export class BookListComponent implements OnInit {
         this.message = err.error.error;
       }
     });
+  }
+
+  showBookDetails(book: BookResponse) {
+    const bookId = book.id;
+    this.router.navigate(['/details', bookId]);
   }
 }
