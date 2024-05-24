@@ -696,6 +696,7 @@
       "BookRequest": {
         "required": [
           "authorName",
+          "bookPlot",
           "bookSummary",
           "isbn",
           "title"
@@ -716,6 +717,9 @@
             "type": "string"
           },
           "bookSummary": {
+            "type": "string"
+          },
+          "bookPlot": {
             "type": "string"
           },
           "isShareable": {
@@ -841,6 +845,9 @@
             "type": "string"
           },
           "bookSummary": {
+            "type": "string"
+          },
+          "bookPlot": {
             "type": "string"
           },
           "bookCover": {

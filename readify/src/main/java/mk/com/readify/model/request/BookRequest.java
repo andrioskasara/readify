@@ -12,6 +12,8 @@ public record BookRequest(
         String authorName,
         @NotEmpty(message = "103")
         String bookSummary,
+        @NotEmpty(message = "104")
+        String bookPlot,
         boolean isShareable
 ) {
 }

@@ -18,6 +18,9 @@ public class Book extends BaseEntity {
     private String title;
     private String authorName;
     private String bookSummary;
+    @Lob
+    @Column(columnDefinition = "TEXT")
+    private String bookPlot;
     private String bookCoverImage;
     @ManyToOne
     private User bookOwner;

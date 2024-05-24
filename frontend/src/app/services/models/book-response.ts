@@ -4,6 +4,7 @@ export interface BookResponse {
   archived?: boolean;
   authorName?: string;
   bookCover?: Array<string>;
+  bookPlot?: string;
   bookRating?: number;
   bookSummary?: string;
   id?: number;

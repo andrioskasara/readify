@@ -16,6 +16,7 @@ public class BookConverter {
                 .title(request.title())
                 .authorName(request.authorName())
                 .bookSummary(request.bookSummary())
+                .bookPlot(request.bookPlot())
                 .isArchived(false)
                 .isShareable(request.isShareable())
                 .build();
@@ -28,6 +29,7 @@ public class BookConverter {
                 .title(book.getTitle())
                 .authorName(book.getAuthorName())
                 .bookSummary(book.getBookSummary())
+                .bookPlot(book.getBookPlot())
                 .bookCover(FileLoader.readFileFromLocation(book.getBookCoverImage()))
                 .ownerName(book.getBookOwner().getFullName())
                 .bookRating(book.getRating())
