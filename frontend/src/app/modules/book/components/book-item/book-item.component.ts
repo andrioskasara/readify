@@ -35,10 +35,15 @@ export class BookItemComponent {
     return 'https://source.unsplash.com/user/c_v_r/1080x1920';
   }
 
+  @Output() private showDetails: EventEmitter<BookResponse> = new EventEmitter<BookResponse>();
   @Output() private borrow: EventEmitter<BookResponse> = new EventEmitter<BookResponse>();
   @Output() private edit: EventEmitter<BookResponse> = new EventEmitter<BookResponse>();
   @Output() private share: EventEmitter<BookResponse> = new EventEmitter<BookResponse>();
   @Output() private archive: EventEmitter<BookResponse> = new EventEmitter<BookResponse>();
+
+  onShowDetails() {
+    this.showDetails.emit(this._book);
+  }
 
   onBorrow() {
     this.borrow.emit(this._book);

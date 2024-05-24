@@ -36,6 +36,12 @@
                     rows="4"></textarea>
         </div>
         <div class="col-12">
+          <label for="plot" class="form-label">Plot</label>
+          <textarea [(ngModel)]="bookRequest.bookPlot" id="plot" name="bookPlot" class="form-control"
+                    placeholder="Book plot"
+                    rows="6"></textarea>
+        </div>
+        <div class="col-12">
           <input [(ngModel)]="bookRequest.isShareable" id="shareable" name="isShareable" class="form-check-input me-1"
                  type="checkbox"/>
           <label for="shareable" class="form-check-label"> Share book</label>
