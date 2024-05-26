@@ -1,0 +1,47 @@
+h2 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.alert {
+  margin-bottom: 1rem;
+}
+
+.btn-outline-primary {
+  border-radius: 5px;
+}
+
+.d-flex.justify-content-end {
+  margin-bottom: 1rem;
+}
+
+.d-flex.flex-wrap.justify-content-start {
+  gap: 1rem;
+}
+
+.pagination {
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+.page-item {
+  margin-right: 0.5rem;
+}
+
+.page-link {
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.page-link:hover {
+  text-decoration: underline;
+}
+
+.page-link.disabled {
+  color: #6c757d;
+  pointer-events: none;
+}
+
+.pagination i {
+  font-size: 1rem;
+}

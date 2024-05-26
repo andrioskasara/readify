@@ -12,7 +12,7 @@ export class ReturnedBooksComponent implements OnInit {
 
   returnedBooks: PageResponseBorrowedBookResponse = {};
   page: number = 0;
-  size: number = 3;
+  size: number = 4;
   message: string = '';
   messageType: string = 'success';
 

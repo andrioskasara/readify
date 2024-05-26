@@ -12,7 +12,7 @@ export class SearchResultComponent implements OnInit {
   bookResponse: PageResponseBookResponse = {};
   searchTerm: string = '';
   page = 0;
-  size = 12;
+  size = 4;
   message = '';
   messageType = '';
 

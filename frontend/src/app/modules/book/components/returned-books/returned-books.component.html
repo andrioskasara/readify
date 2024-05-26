@@ -38,8 +38,7 @@
     </tr>
     </tbody>
   </table>
-
-  <div class="d-flex justify-content-center mt-3">
+  <div *ngIf="returnedBooks && returnedBooks.totalPages && returnedBooks.totalPages > 1" class="d-flex justify-content-center mt-3">
     <nav aria-label="Page nav">
       <ul class="pagination">
         <li class="page-item">
@@ -75,5 +74,4 @@
       </ul>
     </nav>
   </div>
-
 </div>

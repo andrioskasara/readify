@@ -2,15 +2,71 @@
   width: 20rem;
   min-height: 65vh;
   max-height: 65vh;
+  margin-bottom: 20px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease;
 
-  div {
-    &.card {
-      min-height: 450px;
-      max-height: 450px;
-    }
+  &:hover {
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
   }
 
-  i {
-    cursor: pointer;
+  .card {
+    border: none;
+    border-radius: 8px;
+
+    img {
+      width: 100%;
+      height: auto;
+      border-radius: 8px 8px 0 0;
+    }
+
+    .card-body {
+      padding: 20px;
+      text-align: left;
+
+      h4.card-title {
+        margin-bottom: 10px;
+        font-size: 18px;
+        font-weight: bold;
+      }
+
+      .card-subtitle {
+        font-size: 14px;
+        color: #6c757d;
+        margin-bottom: 5px;
+
+        i {
+          margin-right: 5px;
+        }
+      }
+
+      p.card-text {
+        font-size: 14px;
+        line-height: 1.6;
+      }
+    }
+
+    .card-footer {
+      padding: 15px;
+      border-top: 1px solid #e0e0e0;
+      background-color: #f8f9fa;
+      border-radius: 0 0 8px 8px;
+
+      .d-flex {
+        align-items: center;
+
+        i {
+          font-size: 18px;
+          margin-right: 5px;
+        }
+      }
+
+      .btn {
+        padding: 8px 15px;
+        font-size: 14px;
+      }
+    }
   }
 }

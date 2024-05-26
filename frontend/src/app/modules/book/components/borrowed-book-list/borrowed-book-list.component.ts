@@ -15,7 +15,7 @@ export class BorrowedBookListComponent implements OnInit {
   selectedBook: BorrowedBookResponse | undefined = undefined;
   bookReviewRequest: BookReviewRequest = {bookId: 0, comment: "", rating: 0};
   page: number = 0;
-  size: number = 3;
+  size: number = 4;
 
   constructor(
     private bookService: BookService,

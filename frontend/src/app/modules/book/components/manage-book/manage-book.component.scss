@@ -1,0 +1,59 @@
+h2 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.p-3 {
+  background-color: #f8f9fa;
+  border-radius: 8px;
+}
+
+.alert {
+  border-radius: 8px;
+}
+
+.form-control {
+  border-radius: 5px;
+}
+
+.form-check-input {
+  margin-top: 0.3rem;
+}
+
+.col-3 {
+  height: 70vh;
+}
+
+.col-3 img {
+  max-width: 100%;
+  border-radius: 8px;
+}
+
+.col-3 input[type="file"] {
+  width: 100%;
+}
+
+.col-9 {
+  padding-left: 1rem;
+}
+
+.col-12 label {
+  font-weight: bold;
+}
+
+.col-12 textarea {
+  resize: vertical;
+}
+
+.col-12.d-flex.justify-content-end {
+  margin-top: 1rem;
+}
+
+.btn-outline-primary,
+.btn-outline-dark {
+  border-radius: 5px;
+}
+
+.btn-outline-dark {
+  margin-right: 0.5rem;
+}

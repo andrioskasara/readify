@@ -10,7 +10,6 @@ import {ActivatedRoute, Router} from "@angular/router";
 })
 export class BookDetailsComponent implements OnInit {
   bookRequest: BookRequest = {authorName: "", bookSummary: "", bookPlot: "", isbn: "", title: ""};
-  errorMessage: Array<string> = [];
   selectedImage: string | undefined;
 
   constructor(
@@ -38,7 +37,7 @@ export class BookDetailsComponent implements OnInit {
             this.selectedImage = 'data:image/jpg;base64,' + book.bookCover;
           }
         }
-      })
+      });
     }
   }
 }

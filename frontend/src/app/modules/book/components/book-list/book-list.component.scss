@@ -1,0 +1,46 @@
+h2 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.alert {
+  margin-bottom: 1rem;
+}
+
+.pagination {
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+.page-item {
+  margin-right: 0.5rem;
+}
+
+.page-link {
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.page-link:hover {
+  text-decoration: underline;
+}
+
+.page-link.disabled {
+  color: #6c757d;
+  pointer-events: none;
+}
+
+.pagination i {
+  font-size: 1rem;
+}
+
+.book-item {
+  margin-right: 1rem;
+}
+
+@media (max-width: 576px) {
+  .book-item {
+    margin-right: 0;
+    margin-bottom: 1rem;
+  }
+}

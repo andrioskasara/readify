@@ -1,7 +1,51 @@
-div i {
+h2 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.table {
+  margin-top: 1.5rem;
+}
+
+.pagination {
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+.page-item {
+  margin-right: 0.5rem;
+}
+
+.page-link {
+  text-decoration: none;
   cursor: pointer;
+}
+
+.page-link:hover {
+  text-decoration: underline;
+}
+
+.page-link.disabled {
+  color: #6c757d;
+  pointer-events: none;
+}
+
+.page-link i {
+  font-size: 1rem;
+}
+
+.col-6 {
+  max-width: 50%;
+}
+
+.form-range {
+  width: 50%;
 }
 
 .mark-row {
   opacity: 0.5;
+}
+
+div i {
+  cursor: pointer;
 }
