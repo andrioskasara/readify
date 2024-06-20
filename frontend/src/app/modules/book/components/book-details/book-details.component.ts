@@ -11,6 +11,9 @@ import {ActivatedRoute, Router} from "@angular/router";
 export class BookDetailsComponent implements OnInit {
   bookRequest: BookRequest = {authorName: "", bookSummary: "", bookPlot: "", isbn: "", title: ""};
   selectedImage: string | undefined;
+  message: string = '';
+  messageType: string = 'success';
+  bookId: any;
 
   constructor(
     private bookService: BookService,
@@ -19,10 +22,10 @@ export class BookDetailsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    const bookId = this.activatedRoute.snapshot.params['bookId'];
-    if (bookId) {
+    this.bookId = this.activatedRoute.snapshot.params['bookId'];
+    if (this.bookId) {
       this.bookService.findBookById({
-        'bookId': bookId
+        'bookId': this.bookId
       }).subscribe({
         next: (book) => {
           this.bookRequest = {
@@ -39,5 +42,22 @@ export class BookDetailsComponent implements OnInit {
         }
       });
     }
+  }
+
+  borrowBook() {
+    this.message = '';
+    this.bookService.borrowBook({
+      'bookId': this.bookId as number
+    }).subscribe({
+      next: () => {
+        this.messageType = 'success';
+        this.message = "The book is added to your list successfully";
+      },
+      error: (err) => {
+        console.log(err);
+        this.messageType = 'error';
+        this.message = err.error.error;
+      }
+    });
   }
 }
