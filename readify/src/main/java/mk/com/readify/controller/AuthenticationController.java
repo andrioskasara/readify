@@ -21,9 +21,13 @@ public class AuthenticationController {
 
     @PostMapping("/register")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public ResponseEntity<?> register(@RequestBody @Valid RegistrationRequest request) throws MessagingException {
-        authenticationService.register(request);
-        return ResponseEntity.accepted().build();
+    public ResponseEntity<?> register(@RequestBody @Valid RegistrationRequest request) {
+        try {
+            authenticationService.register(request);
+            return ResponseEntity.accepted().build();
+        } catch (MessagingException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Email sending failed");
+        }
     }
 
     @PostMapping("/authenticate")
@@ -32,7 +36,12 @@ public class AuthenticationController {
     }
 
     @GetMapping("/activate-account")
-    public void confirm(@RequestParam String token) throws MessagingException {
-        authenticationService.activateAccount(token);
+    public ResponseEntity<String> confirm(@RequestParam String token)  {
+        try {
+            authenticationService.activateAccount(token);
+            return ResponseEntity.ok("Account activated successfully");
+        } catch (MessagingException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Account activation failed");
+        }
     }
 }

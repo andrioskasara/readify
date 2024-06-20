@@ -1,5 +1,5 @@
 import {Component, OnInit, Inject, PLATFORM_ID} from '@angular/core';
-import {UserService} from "../../../../services/services/user.service";
+import {UserService} from "../../../../services/user/user.service";
 import {isPlatformBrowser} from '@angular/common';
 import {Router} from "@angular/router";
 
