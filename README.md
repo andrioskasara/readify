@@ -2,7 +2,7 @@
 
 ## Description
 Readify is a full-stack web application built to manage book collections. It provides users with tools to register, authenticate securely, 
-and engage in various book-related activities such as creating, updating, sharing, and archiving books. The application facilitates book borrowing with availability checks, 
+and engage in various book-related activities such as creating, updating, sharing and archiving books. The application facilitates book borrowing with availability checks, 
 enables users to return books with optional ratings and reviews, and supports the approval process for book returns by owners. Readify aims to enhance the experience of managing and 
 sharing books within a community setting.
 
@@ -19,7 +19,7 @@ sharing books within a community setting.
 ### Backend
 Java, Spring Boot, Spring Data JPA, Spring Security
 ### Frontend
-Frontend: Angular, HTML, SCSS, TypeScript, Bootstrap
+Angular, HTML, SCSS, TypeScript, Bootstrap
 ### Database
 PostgreSQL
 ### Other
