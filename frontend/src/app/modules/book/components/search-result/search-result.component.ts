@@ -1,7 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {BookService} from "../../../../services/services/book.service";
 import {PageResponseBookResponse} from "../../../../services/models/page-response-book-response";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
+import {BookResponse} from "../../../../services/models/book-response";
 
 @Component({
   selector: 'app-search-result',
@@ -17,6 +18,7 @@ export class SearchResultComponent implements OnInit {
   messageType = '';
 
   constructor(
+    private router: Router,
     private route: ActivatedRoute,
     private bookService: BookService
   ) {
@@ -69,5 +71,27 @@ export class SearchResultComponent implements OnInit {
   goToLastPage() {
     this.page = this.bookResponse.totalPages as number - 1;
     this.searchBooks();
+  }
+
+  borrowBook(book: BookResponse) {
+    this.message = '';
+    this.bookService.borrowBook({
+      'bookId': book.id as number
+    }).subscribe({
+      next: () => {
+        this.messageType = 'success';
+        this.message = "The book is added to your list successfully";
+      },
+      error: (err) => {
+        console.log(err);
+        this.messageType = 'error';
+        this.message = err.error.error;
+      }
+    });
+  }
+
+  showBookDetails(book: BookResponse) {
+    const bookId = book.id;
+    this.router.navigate(['/details', bookId]);
   }
 }
